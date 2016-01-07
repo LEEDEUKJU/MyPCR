@@ -1,23 +1,24 @@
 package com.mypcr;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 import com.mypcr.emulator.MyPCR;
 
 public class Main {
 
 	public static void main(String[] args) {
-		MyPCR mypcr = new MyPCR();
+			
+		Lotto a = new Lotto();
 		
-		int res = mypcr.add(2, 1);
-		System.out.println(res);
-
-		int res2 = mypcr.sub(2, 1);
-		System.out.println(res2);
+		int []res = a.makeLotto();
 		
-		int res3 = mypcr.mul(2, 1);
-		System.out.println(res3);
-		
-		int res4 = mypcr.div(2, 0);
-		System.out.println(res4);
+		for(int i : res)
+		{
+			System.out.println(i);
+			
+		}
 	}
 
 }
