@@ -38,3 +38,4 @@ public class Lotto {
 		return a5;
 	}
 }
+
