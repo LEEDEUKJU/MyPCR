@@ -1,90 +1,60 @@
 package com.mypcr;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.ArrayList;
 
-import com.mypcr.emulator.MyPCR;
+import com.mypcr.emulator.Protocol;
 
 public class Main {
 
 	public static void main(String[] args) {
-			
-		Lotto a = new Lotto();
+		/*	
+		//List
+		//(data next*) -> (data next*)
+		ArrayList<String> list = new ArrayList<String>();
 		
-		int []res = a.makeLotto();
+		list.add("test1");
+		list.add("test2");
+		list.add("test4");
+		list.add("test4");
+		list.add("test3");
 		
-		int []a1 = a.makeLotto();
+		System.out.println(list.size());
 		
-		int []a2 = a.makeLotto();
+		Collections.sort(list); // Arrays.sort 는 기본형만 지원
 		
-		int []a3 = a.makeLotto();
-		
-		int sum = 0; 
-		
-		for(int i = 0; i<7; i++)
+		for(String i:list)
 		{
-			for (int j = 0; j<7; j++)
-				{
-					if(res[i] == a1[j])
-						sum ++;
-					    //System.out.print(i + " ");
-					
-				}
+			System.out.println(i);
+		}
+	*/
+		String pcr = "1	25	40\n" + "2	40	50\n" + "3	60	100\n";
+		
+		String[] pcrs = pcr.split("\n"); // 한줄 씩  \n으로 짜른다
+		
+		ArrayList<Protocol> list = new ArrayList<Protocol>();
+		
+		for(int i=0; i<pcrs.length; ++i)
+		{
+			String[] pcrss = pcrs[i].split("\t");
+			
+			int temp = Integer.parseInt(pcrss[1]);
+			int time = Integer.parseInt(pcrss[2]);
+			
+			
+			Protocol p1 = new Protocol(pcrss[0], temp, time);
+			list.add(p1);
 			
 		}
 		
-		if(sum == 0) System.out.println("사용자 1 : 꽝");
-		if(sum == 1) System.out.println("사용자 1 : 7등");
-		if(sum == 2) System.out.println("사용자 1 : 6등");
-		if(sum == 3) System.out.println("사용자 1 : 5등");
-		if(sum == 4) System.out.println("사용자 1 : 4등");
-		if(sum == 5) System.out.println("사용자 1 : 3등");
-		if(sum == 6) System.out.println("사용자 1 : 2등");
-		if(sum == 7) System.out.println("사용자 1 : 1등");
 		
-		for(int i = 0; i<7; i++)
-		{
-			for (int j = 0; j<7; j++)
-				{
-					if(res[i] == a2[j])
-						sum ++;
-					    //System.out.print(i + " ");
-				}
+		System.out.println("======Protocol======");
+		System.out.println("label	temp	Time");
+		for(int i=0; i<list.size(); ++i){
+			Protocol p = list.get(i);
 			
+			System.out.println(p.getLabel() + "\t" + p.getTemp() + "\t" + p.getTime());
 		}
-		
-		if(sum == 0) System.out.println("사용자 2 : 꽝");
-		if(sum == 1) System.out.println("사용자 2 : 7등");
-		if(sum == 2) System.out.println("사용자 2 : 6등");
-		if(sum == 3) System.out.println("사용자 2 : 5등");
-		if(sum == 4) System.out.println("사용자 2 : 4등");
-		if(sum == 5) System.out.println("사용자 2 : 3등");
-		if(sum == 6) System.out.println("사용자 2 : 2등");
-		if(sum == 7) System.out.println("사용자 2 : 1등");
-		
-		for(int i = 0; i<7; i++)
-		{
-			for (int j = 0; j<7; j++)
-				{
-					if(res[i] == a3[j])
-						sum ++;
-					    //System.out.print(i + " ");
-				}
-			
-		}
-		
-		if(sum == 0) System.out.println("사용자 3 : 꽝");
-		if(sum == 1) System.out.println("사용자 3 : 7등");
-		if(sum == 2) System.out.println("사용자 3 : 6등");
-		if(sum == 3) System.out.println("사용자 3 : 5등");
-		if(sum == 4) System.out.println("사용자 3 : 4등");
-		if(sum == 5) System.out.println("사용자 3 : 3등");
-		if(sum == 6) System.out.println("사용자 3 : 2등");
-		if(sum == 7) System.out.println("사용자 3 : 1등");
 		
 	}
-	
-	
 }
 
