@@ -10,7 +10,6 @@ public class MyPCR {
 		
 		ArrayList<Protocol> list1 = new ArrayList<Protocol>();
 		
-		
 		try{
 			for(int i=0; i<pcrs1.length; ++i)
 			{
@@ -36,17 +35,19 @@ public class MyPCR {
 	}
 
 	public void showProtocolList(ArrayList<Protocol> list){
-		
-		
-		ArrayList<Protocol> list2 = new ArrayList<Protocol>();
 
 		
 		System.out.println("======Protocol======");
 		System.out.println("label	temp	Time");
-		for(int i=0; i<list2.size(); ++i){
-			Protocol p = list2.get(i);
 		
-			System.out.println(p.getLabel() + "\t" + p.getTemp() + "\t" + p.getTime());
+		if(list != null){
+			for(int i=0; i<list.size(); ++i){
+				Protocol p = list.get(i);
+				
+				System.out.println(p.getLabel() + "\t" + p.getTemp() + "\t" + p.getTime());
+			}
 		}
+	
 	}
+		
 }

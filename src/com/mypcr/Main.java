@@ -27,7 +27,7 @@ public class Main {
 			System.out.println(i);
 		}
 	*/
-		String pcr1 = "1	50	40\n" + "2	kk	50\n" + "3	60	100\n";
+		String pcr1 = "1	50	40\n" + "2	tt	50\n" + "3	60	100\n";
 		String pcr2 = "1	25	40\n" + "2	40	50\n" + "3	60\n";
 		
 		MyPCR a = new MyPCR();
