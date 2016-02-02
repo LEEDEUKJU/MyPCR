@@ -39,14 +39,32 @@ public class Main {
 			
 			 while( (line = in.readLine()) != null ){
 			 	line2 = line2 + line + "\n";
-			 	System.out.println(line);
+			 	//System.out.println(line);
 			 }
+			  
 			
 			MyPCR a = new MyPCR();
 			
-			ArrayList<Protocol> pcr = a.makeProtocolList(line2);			
+			ArrayList<Protocol> list = a.makeProtocolList(line2);			
 			
-			a.showProtocolList(pcr);
+			for(int i=0; i<list.size(); ++i)
+			{
+				Protocol protocol = list.get(i);
+				
+				if(protocol.getLabel().equalsIgnoreCase("GOTO")){
+					int target = protocol.getTemp();
+					int time = protocol.getTime();
+					protocol.setTime(time-1);
+					
+					if( time-1 !=0 ){
+						i = target-2;
+					}
+				}
+				else{
+					System.out.println(protocol.getLabel());
+				}
+			}
+			//a.showProtocolList(list);
 			 
 			in.close();
 			
