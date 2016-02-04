@@ -14,63 +14,63 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		//BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-		BufferedReader in = null;
+		final MyPCR pcr = new MyPCR();
 		
-		try {
-			in = new BufferedReader(new FileReader(new File("ProtocolText")));
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		try {
-			String line = null;
-			String line2 = "";
-			
-			/*
-			str = in.readLine();
-			
-			while(str != null){
-				System.out.println(str);
-				str = in.readLine();
+		//String data = pcr.loadProtocolfromFile(("ProtocolText"));
+		
+		//ArrayList<Protocol> list = pcr.makeProtocolList(data);			
+		
+		//pcr.showProtocolList(list);
+		
+		pcr.start();
+		
+		while(true){
+			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+		
+			try {
+				String cmd = in.readLine();
+				//System.out.println(cmd);
 				
-			}
-			*/
-			
-			 while( (line = in.readLine()) != null ){
-			 	line2 = line2 + line + "\n";
-			 	//System.out.println(line);
-			 }
-			  
-			
-			MyPCR a = new MyPCR();
-			
-			ArrayList<Protocol> list = a.makeProtocolList(line2);			
-			
-			for(int i=0; i<list.size(); ++i)
-			{
-				Protocol protocol = list.get(i);
-				
-				if(protocol.getLabel().equalsIgnoreCase("GOTO")){
-					int target = protocol.getTemp();
-					int time = protocol.getTime();
-					protocol.setTime(time-1);
+				if ( cmd.equals("start"))
+					//System.out.println("start!");
+					pcr.startPCR();
+				else if ( cmd.equals("stop"))
+					//System.out.println("stop!");
+					pcr.stopPCR();
+				else if ( cmd.equals("print"))
+					//System.out.println("print!");
+					pcr.printStatus();
+				else if ( cmd.equals("monitor")){
+					pcr.setMonitoring(true);
 					
-					if( time-1 !=0 ){
-						i = target-2;
-					}
+					Thread t = new Thread(){
+						public void run(){
+							while(pcr.isMonitoring()){
+								try{
+									Thread.sleep(10);
+								}catch(InterruptedException e){
+									e.printStackTrace();
+								}
+								
+								pcr.printStatus();
+							}
+						}
+					};
+					t.start();
+					
+					in.readLine();
+					pcr.setMonitoring(false);
 				}
 				else{
-					System.out.println(protocol.getLabel());
+					
 				}
+					
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			//a.showProtocolList(list);
-			 
-			in.close();
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
+
 	}
 }
