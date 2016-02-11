@@ -38,12 +38,9 @@ public class MyPCR extends Thread {
 	
 	public void run(){
 		int Times = 0;
-		while(true){
-			if(state == STATE_RUN){
-				
-				//mElapsedTime += 1;
-		
-			}
+		boolean flag = false;
+		//mTemp = mPrevTemp;
+		while(true){	
 			try{
 				Thread.sleep(100);
 			}catch(InterruptedException e){
@@ -52,7 +49,22 @@ public class MyPCR extends Thread {
 			
 			//100ms 마다 0.5도씩 상승
 			if( state == STATE_RUN){
-				mTemp = mTemp + 0.01;
+				if(mTemp >= mPrevTemp){
+					flag = true;
+				}
+				if(!flag)
+					mTemp = mTemp + 1;
+				
+				else
+				{
+					mTemp = mTemp - 1;
+					if( mTemp < mTargetTemp )
+					{
+						stopPCR();
+					}
+				}
+				//if(mTemp <= mTargetTemp)
+				
 				Times += 1;
 				if(Times >= 9){
 					Times = 0;
@@ -65,6 +77,14 @@ public class MyPCR extends Thread {
 			//start 일때만, ready 일때는 기본 온도로 변경
 		}
 	}
+	
+	/*private void mTargetTempGo()
+	{
+		mTemp--;
+		if(mTemp <= mTargetTemp)
+			stopPCR();
+		
+	}*/
 	
 	public ArrayList<Protocol> makeProtocolList(String pcr)
 	{
@@ -173,16 +193,19 @@ public class MyPCR extends Thread {
 		if(state == STATE_RUN){
 			return;
 		}
-		System.out.println("PCR 시작!");
+		mPrevTemp = 95.0;
+		mTargetTemp = 50.0;
 		state = STATE_RUN;
+		System.out.println("PCR 시작!");
 	}
 	
 	public void stopPCR(){
 		if(state == STATE_READY){
 			return;
 		}
-		System.out.println("PCR 종료!");
 		state = STATE_READY;
+		setMonitoring(false);
+		System.out.println("PCR 종료!");
 	}
 	
 	private String getElapsedTime()
